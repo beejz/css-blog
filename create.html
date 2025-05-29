@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Blog</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="blogs.html">Blogs</a>
+    <a href="about.html">About</a>
+    <a href="create.html">New Blog</a>
+  </nav>
+
+  <form id="create-form">
+    <div class="form-group">
+      <label for="title">Blog title:</label>
+      <input type="text" id="title" name="title" required>
+    </div>
+    <div class="form-group">
+      <label for="snippet">Blog snippet:</label>
+      <input type="text" id="snippet" name="snippet" required>
+    </div>
+    <div class="form-group">
+      <label for="body">Blog body:</label>
+      <textarea id="body" name="body" rows="6" required></textarea>
+    </div>
+    <button type="submit">Submit</button>
+  </form>
+
+  <footer>
+    <p>&copy; 2025 My Blog. All rights reserved.</p>
+  </footer>
+
+  <script>
+    document
+      .getElementById('create-form')
+      .addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        // collect values
+        const title   = this.title.value.trim();
+        const snippet = this.snippet.value.trim();
+        const body    = this.body.value.trim();
+
+        // get existing posts (or empty array)
+        const posts = JSON.parse(localStorage.getItem('posts') || '[]');
+
+        // add new post to front
+        posts.unshift({ title, snippet, body, date: new Date().toISOString() });
+
+        // save back to localStorage
+        localStorage.setItem('posts', JSON.stringify(posts));
+
+        // go view your list
+        window.location.href = 'blogs.html';
+      });
+  </script>
+</body>
+</html>

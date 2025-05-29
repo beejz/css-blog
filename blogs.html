@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Blog</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="blogs.html">Blogs</a>
+        <a href="about.html">About</a>
+        <a href="create.html">New Blog</a>
+    </nav>
+
+    <section class="posts" id="posts-container">
+      <!-- posts injected here -->
+    </section>
+
+    <footer>
+      <p>&copy; 2025 My Blog. All rights reserved.</p>
+    </footer>
+
+    <script>
+      const container = document.getElementById('posts-container');
+      const posts = JSON.parse(localStorage.getItem('posts') || '[]');
+
+      if (posts.length === 0) {
+        container.innerHTML = `
+          <p style="text-align:center; margin: 2rem 0;">
+            No posts yet. <a href="create.html">Create one</a>!
+          </p>
+        `;
+      } else {
+        posts.forEach(({ title, snippet }) => {
+          const art = document.createElement('article');
+
+          const h3 = document.createElement('h3');
+          h3.textContent = title;
+          art.appendChild(h3);
+
+          const p = document.createElement('p');
+          p.textContent = snippet;
+          art.appendChild(p);
+
+          container.appendChild(art);
+        });
+      }
+    </script>
+</body>
+</html>
